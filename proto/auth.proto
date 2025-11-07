@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package auth;
+ option go_package = "github.com/XaCaMaCa/protos/protos/gen/go;authv1";
+
+// Определение сервиса авторизации
+service AuthService {
+  // Регистрация нового пользователя
+  rpc Register (RegisterRequest) returns (RegisterResponse);
+  
+  // Вход пользователя
+  rpc Login (LoginRequest) returns (LoginResponse);
+  
+  // Проверка доступа пользователя
+  rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
+}
+
+// Запрос на регистрацию
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+}
+
+// Ответ на регистрацию
+message RegisterResponse {
+  int64 user_id = 1;
+}
+
+// Запрос на вход
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+  int32 app_id = 3;  // Идентификатор приложения
+}
+
+// Ответ на вход
+message LoginResponse {
+  string token = 1;
+}
+
+// Запрос на проверку прав администратора
+message IsAdminRequest {
+  int64 user_id = 1;
+}
+
+// Ответ на проверку прав администратора
+message IsAdminResponse {
+  bool is_admin = 1;
+}
